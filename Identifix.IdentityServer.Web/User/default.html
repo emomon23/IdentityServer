@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html ng-app="registrationApp">
+<head>
+    <title>Identifix</title>
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <link href="../Content/bootstrap-theme.css" rel="stylesheet"/>
+    <link href="../Content/Site.css" rel="stylesheet"/>
+    
+    <script src="../Scripts/Common/jquery-2.2.1.min.js"></script>
+    <script src="../Scripts/Common/angular.js"></script>
+    <script src="../Scripts/Common/angular-route.js"></script>
+
+    <script src="../Scripts/Custom/Controllers/RegistrationApp.js"></script>
+    <script src="../Scripts/Custom/Services/LocalServer.js"></script>
+    <script src="../Scripts/Custom/Configuration/RouteConfiguration.js"></script>
+    <script src="../Scripts/Custom/Directives/CompareToDirective.js"></script>
+    <script src="../Scripts/Custom/Directives/OnKeyPress.js"></script>
+</head>
+
+<body ng-controller="registrationCTRL">
+
+<div class='navbar navbar-inverse navbar-fixed-top'>
+    <div class="navbar-header">
+        <a class='nav-brand' href='/identity/'>
+            <span class="navbar-brand">Identifix</span>
+        </a>
+        <img id="backEndProcessingSpinner" ng-show="amBackEndProcessing" src="/Content/Images/processingSpinner.gif" />
+
+    </div>
+</div>
+
+<div id="validaationError">{{ data.validationError }}</div>
+<div id="errorMsg" class="alert alert-danger" ng-show="data.errorMessage.length > 0">{{ data.errorMessage }}</div>
+
+<div class="container">
+    <ng-view></ng-view>
+</div>
+
+</body>
+</html>

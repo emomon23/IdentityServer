@@ -1,0 +1,102 @@
+﻿<h1>Profile Update</h1>
+<a id="editUserProfileChangePassword" ng-click="navigateTo('changePassword')">Change Password</a>
+<form id="userEditForm" name="editUserForm" novalidate>
+    <div class="form-group">
+        <label for="editUserEmail">Email</label>
+        <span id="editUser_emailRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserEmail.$touched) && editUserForm.editUserEmail.$error.required">
+            Please provide your email address
+        </span>
+        <span id="editUser_emailInvalidFormat" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserEmail.$touched) && editUserForm.editUserEmail.$error.email">Invalid email address.</span>
+        <span id="editUser_emailDuplicate" class="error" ng-show="data.editUser.emailValidationError != ''">{{ data.editUser.emailValidationError }}</span>
+        <input id="editUserEmail" ng-blur="validateEditUserEmail()" type="email" name="editUserEmail" ng-model="data.editUser.email" required class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="editUserConfirmEmail">Confirm Email</label>
+        <span id="editUser_confirmEmailRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserConfirmEmail.$touched) && editUserForm.editUserConfirmEmail.$error.required">
+            Please confirm you Email address
+        </span>
+        <span id="editUser_confirmEmailInvalidFormat" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserConfirmEmail.$touched) && editUserForm.editUserConfirmEmail.$error.email">Invalid email address.</span>
+        <span id="editUser_confirmEmailDoesntMatch" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserConfirmEmail.$touched) && editUserForm.editUserConfirmEmail.$error.compareTo">Confirm Email doesn't match Email</span>
+        <input id="editUserConfirmEmail" type="email" name="editUserConfirmEmail" compare-to="data.editUser.email" ng-model="data.editUser.confirmEmailAddress" required class="form-control"/>
+    </div>
+
+
+    <div class="form-group">
+        <label for="editUser_editUserFirstName">First Name</label>
+        <span id="editUser_firstNameRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserFirstName.$touched) && editUserForm.editUserFirstName.$invalid">
+            Please enter your First Name
+        </span>
+        <input id="editUser_editUserFirstName" name="editUserFirstName" ng-model="data.editUser.firstName" required class="form-control"/>
+    </div>
+
+    <div class="form-group">
+        <label for="editUser_editUserLastName">Last Name</label>
+        <span id="editUser_lastNameRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserLastName.$touched) && editUserForm.editUserLastName.$invalid">
+            Please enter your Last Name
+        </span>
+        <input id="editUser_editUserLastName" name="editUserLastName" ng-model="data.editUser.lastName" required class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="editUserShopName">Shop Name</label>
+        <span id="editUser_shopNameRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserShopName.$touched) && editUserForm.editUserShopName.$invalid">
+            Please enter your Shop Name
+        </span>
+        <input id="editUserShopName" name="editUserShopName" ng-model="data.editUser.shopName" required class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="editUserAddress1">Address 1</label>
+        <span id="editUser_address1Required" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserAddress1.$touched) && editUserForm.editUserAddress1.$invalid">
+            Please enter an Address
+        </span>
+        <input id="editUserAddress1" name="editUserAddress1" ng-model="data.editUser.address1" required class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="editUser_editUserAddress2">Address 2</label>
+        <input id="editUser_editUserAddress2" name="editUserAddress2" ng-model="data.editUser.address2" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="editUserCountry">Country</label>
+        <span id="editUser_countryRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserCountry.$touched) && editUserForm.editUserCountry.$invalid">
+            Please select your Country
+        </span>
+        <select id="editUserCountry" name="editUserCountry" ng-model="data.editUser.country" ng-options="option.name for option in referenceData.countries track by option.id" class="form-control"></select>
+        <img ng-show="referenceData.countries.length === 0" src="/Content/Images/default.gif" />
+    </div>
+
+    <div class="form-group">
+        <label for="editUserCity">City</label>
+        <span id="editUser_cityRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserCity.$touched) && editUserForm.editUserCity.$invalid">
+            Please enter your City
+        </span>
+        <input id="editUserCity" name="editUserCity" ng-model="data.editUser.city" required class="form-control"/>
+    </div>
+
+
+    <div class="form-group">
+        <label for="editUserStateId">State</label>
+        <span id="editUser_stateRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserState.$touched) && editUserForm.editUserState.$error.required">
+            Please select your State
+        </span>
+        <select id="editUserStateId" name="editUserState" ng-model="data.editUser.stateId" ng-required="selectedCountryHasStates" class="form-control">
+            <option ng-if="selectedCountryHasStates" value="" selected="selected">Please Select</option>
+            <option ng-repeat="state in getStates()" value="{{state.id}}">  {{state.name}}  </option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="editUserZipCode">Zipcode</label>
+        <span id="editUser_zipRequired" class="error" ng-show="(invalidEditUserSubmittal || editUserForm.editUserZip.$touched) && editUserForm.editUserZip.$invalid">
+            Please enter your Zipcode
+        </span>
+        <input id="editUserZipCode" name="editUserZip" ng-model="data.editUser.zipCode" required class="form-control" />
+    </div>
+    <div class="form-group">
+        <button id="editUserSave" type="submit" ng-click="updateUser(editUserForm.$valid)">Save</button>
+    </div>
+</form>

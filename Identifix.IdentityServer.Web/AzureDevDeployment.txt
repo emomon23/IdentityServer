@@ -1,0 +1,19 @@
+﻿Instructions for deploying to Microsoft Azure
+
+Publish:
+	Right click on Identifix.IdentityServer.Web project and select 'Publish'.
+
+	Select Import
+		Browse to and select idx-identity.PublishSettings in the root of the solution.
+		Click Publish
+
+	Sit back and watch the magic!
+	After a minute or so a browser should open pointing to the site on Azure: http://idx-identity.azurewebsites.net/
+	A better URL to verify would be https://idx-identity.azurewebsites.net/identity
+
+Notes: 
+	The configuration setting "RedirectUrl" and the ConnectionString "UserDatabase" will be overridden with the correct 
+	values by server configuration on Azure.
+
+	FYI: Connection String for SQLAzure
+	Server=tcp:idx-lhouse.database.windows.net,1433;Database=idx-identity;User ID=IdentifixSSOUser@idx-lhouse;Password=2005FordMust@ng;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;

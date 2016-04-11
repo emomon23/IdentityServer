@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<div class="lightText">
+    <h3>Secure Resource</h3>
+
+    <h1>Welcome to Direct Hit, you have been authenticated and are now logged in!</h1>
+    <h3>Claims</h3>
+    @model IEnumerable<System.Security.Claims.Claim>
+
+    <dl>
+        @foreach (var claim in Model)
+        {
+            <dt>@claim.Type</dt>
+            <dd>@claim.Value</dd>
+        }
+    </dl>
+  </div>

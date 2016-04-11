@@ -1,0 +1,121 @@
+﻿<h1>User Registration</h1>
+<form id="userRegistrationForm" name="newUserForm" novalidate class="form-horizontal">
+    
+    <div class="form-group">
+        <label for="newUserEmail">Email Address</label>
+        <span id="emailRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserEmail.$touched) && newUserForm.newUserEmail.$error.required">
+            Please provide your email address
+        </span>
+        <span id="emailInvalidFormat" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserEmail.$touched) && newUserForm.newUserEmail.$error.email">Invalid email address.</span>
+        <span id="emailDuplicate" class="error" ng-show="data.newUser.emailValidationError != ''">{{ data.newUser.emailValidationError }}</span>
+        <input id="newUserEmail" ng-blur="validateNewUserEmail()" type="email" name="newUserEmail" class="form-control" ng-model="data.newUser.email" required placeholder="Email" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserConfirmEmail">Confirm Email</label>
+        <span id="confirmEmailRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserConfirmEmail.$touched) && newUserForm.newUserConfirmEmail.$error.required">
+            Please confirm you Email address
+        </span>
+        <span id="confirmEmailInvalidFormat" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserConfirmEmail.$touched) && newUserForm.newUserConfirmEmail.$error.email">Invalid email address.</span>
+        <span id="confirmEmailDoesntMatch" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserConfirmEmail.$touched) && newUserForm.newUserConfirmEmail.$error.compareTo">Confirm Email doesn't match Email</span>
+        <input id="newUserConfirmEmail" type="email" name="newUserConfirmEmail" compare-to="data.newUser.email" ng-model="data.newUser.confirmEmailAddress" required class="form-control" placeholder="Confirm your Email" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserFirstName">First Name</label>
+        <span id="firstNameRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserFirstName.$touched) && newUserForm.newUserFirstName.$invalid">
+            Please enter your First Name
+        </span>
+        <input id="newUserFirstName" name="newUserFirstName" ng-model="data.newUser.firstName" required class="form-control" placeholder="First Name" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserLastName">Last Name</label>
+        <span id="lastNameRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserLastName.$touched) && newUserForm.newUserLastName.$invalid">
+            Please enter your Last Name
+        </span>
+        <input id="newUserLastName" name="newUserLastName" ng-model="data.newUser.lastName" required class="form-control" placeholder="First Name" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserShopName">Shop Name</label>
+        <span id="shopNameRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserShopName.$touched) && newUserForm.newUserShopName.$invalid">
+            Please enter your Shop Name
+        </span>
+        <input id="newUserShopName" name="newUserShopName" ng-model="data.newUser.shopName" required class="form-control" placeholder="Shop Name" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserAddress1">Address 1</label>
+        <span id="address1Required" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserAddress1.$touched) && newUserForm.newUserAddress1.$invalid">
+            Please enter an Address
+        </span>
+        <input id="newUserAddress1" name="newUserAddress1" ng-model="data.newUser.address1" required class="form-control" placeholder="Address" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="newUserAddress2">Address 2</label>
+        <input id="newUserAddress2" name="newUserAddress2" ng-model="data.newUser.address2" class="form-control" placeholder="Address Line 2" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserCountry">Country</label>
+        <span id="countryRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserCountry.$touched) && newUserForm.newUserCountry.$invalid">
+            Please select your Country
+        </span>
+        <div class="form-inline">
+            <select id="newUserCountry" name="newUserCountry" ng-model="data.newUser.country" class="form-control" ng-options="option.name for option in referenceData.countries track by option.id"></select>
+            <img id="countriesSpinner" ng-if="referenceData.countries.length === 0" src="/Content/Images/default.gif" />
+        </div>        
+    </div>
+
+    <div class="form-group">
+        <label for="newUserCity">City</label>
+        <span id="cityRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserCity.$touched) && newUserForm.newUserCity.$invalid">
+            Please enter your City
+        </span>
+        <input id="newUserCity" name="newUserCity" ng-model="data.newUser.city" required class="form-control" placeholder="City" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserStateId">State</label>
+        <span id="stateRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserState.$touched) && newUserForm.newUserState.$error.required">
+            Please select your State
+        </span>
+        <select id="newUserStateId" name="newUserState" ng-model="data.newUser.stateId" ng-required="selectedCountryHasStates" class="form-control">
+            <option ng-if="selectedCountryHasStates" value="" selected="selected">Please Select</option>
+            <option ng-repeat="state in getStates()" value="{{state.id}}">  {{state.name}}  </option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="newUserZipCode">Zip Code</label>
+        <span id="zipRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserZip.$touched) && newUserForm.newUserZip.$invalid">
+            Please enter your Zipcode
+        </span>
+        <input id="newUserZipCode" name="newUserZip" ng-model="data.newUser.zipCode" required class="form-control" placeholder="Zip Code" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserPassword">Password</label>
+        <span id="passwordRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserPassword.$touched) && newUserForm.newUserPassword.$invalid">
+            Please enter a Password
+        </span>
+            <div id="invalidPassword" class="error" ng-show="data.newUser.invalidPasswordError.length > 10">{{ data.newUser.invalidPasswordError }}</div>
+        <input id="newUserPassword" type="password" name="newUserPassword" ng-model="data.newUser.password" required ng-blur="verifyPasswordIsValid()" class="form-control" placeholder="Password" />
+    </div>
+
+    <div class="form-group">
+        <label for="newUserConfirmPassword">Confirm Password</label>
+        <span id="confirmPasswordRequired" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserConfirmPassword.$touched) && newUserForm.newUserConfirmPassword.$error.required">
+            Please confirm your Password
+        </span>
+        <span id="confirmPasswordDoesntMatch" class="error" ng-show="(invalidNewUserSubmittal || newUserForm.newUserConfirmPassword.$touched) && newUserForm.newUserConfirmPassword.$error.compareTo">Confirm Password doesn't match Password</span>
+        <input id="newUserConfirmPassword" type="password" name="newUserConfirmPassword" compare-to="data.newUser.password" ng-model="data.newUser.confirmPassword" required class="form-control" placeholder="Confrim your Password" />
+    </div>
+    <div class="form-group">
+        <button id="newUserSave" type="submit" ng-click="registerNewUser(newUserForm.$valid)">Save</button>
+    </div>
+</form>

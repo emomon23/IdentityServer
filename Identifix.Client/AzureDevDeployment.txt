@@ -1,0 +1,16 @@
+﻿Instructions for deploying to Microsoft Azure
+
+Publish:
+	Right click on Identifix.Client project and select 'Publish'.
+
+	Select Import
+		Browse to and select idx-relyingparty.PublishSettings in the root of the solution.
+		Click Publish
+
+	Sit back and watch the magic!
+	After a minute or so a browser should open pointing to the site on Azure: http://idx-relyingparty.azurewebsites.net/
+
+Notes: 
+	The configuration settings "IdentityServerRedirectUrl" and "IdentityServerUrl" will be overridden with the correct 
+	values by server configuration on Azure.
+
